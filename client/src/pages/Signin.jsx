@@ -1,14 +1,15 @@
 import { Box, Button, InputBase, Typography, CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { signInFailure, signInStart, singInSuccess } from '../redux/user/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const Signin = () => {
     const [formData, setFormData] = useState({})
-    const [error, setError] = useState(false)
-    const [loading,setLoading] = useState(false)
     const navigate = useNavigate()
-
+    const dispatch = useDispatch()
+    const {loading, error} = useSelector(state => state.user)
 
     const handleChange = (e) => {
         setFormData({
@@ -16,12 +17,11 @@ const Signin = () => {
         })
     }
     console.log(formData) 
-
+ 
     const handleSubmit = async(e) => {
         e.preventDefault()
         try {
-            setLoading(true)
-            setError(false)
+            dispatch(signInStart())
             const res = await fetch('/api/auth/Signin', {
             method: 'POST',
             headers: {
@@ -29,16 +29,16 @@ const Signin = () => {
             },
             body: JSON.stringify(formData)})
             const data = await res.json() 
-            setLoading(false)
             console.log(data)
             if(data.success === false){
-                setError(true)
-            }else{
-                navigate('/')
+                dispatch(signInFailure(data.message))
+                return
             }
+            dispatch(singInSuccess(data))
+            navigate('/')
+            
         } catch (error) {
-            setLoading(false)
-            setError(true)
+            dispatch(signInFailure(error))
             console.log(error)
         }
     }
@@ -74,12 +74,16 @@ const Signin = () => {
                   loading ? <CircularProgress/> : <Typography>sign-in</Typography>
                 }
             </Button>
-            {
-                error ? <Typography bgcolor={'lightcoral'} borderRadius={'2px'} textAlign={'center'} p={'8px 0'}>
-                    Something is wrong
-                </Typography> : null
-            }
         </form>
+
+        <p style={{borderRadius: "2px",marginTop: "8px", padding: "8px 8px", backgroundColor: 'lightcoral'}}>{
+            error ?  <Typography>
+            {error}
+            </Typography> || <Typography>
+                'Something went wrong'
+            </Typography> : null
+        }</p>
+
         <Typography mt={'32px'}>Don't have an account</Typography>
         <Link to={'/sign-up'} style={{textDecoration: "none"}}>
             <span>Sign up</span>
