@@ -76,13 +76,13 @@ const Signin = () => {
             </Button>
         </form>
 
-        <p style={{borderRadius: "2px",marginTop: "8px", padding: "8px 8px", backgroundColor: 'lightcoral'}}>{
+        <div style={{borderRadius: "2px",marginTop: "8px", padding: "8px 8px", backgroundColor: 'lightcoral'}}>{
             error ?  <Typography>
             {error}
             </Typography> || <Typography>
                 'Something went wrong'
             </Typography> : null
-        }</p>
+        }</div>
 
         <Typography mt={'32px'}>Don't have an account</Typography>
         <Link to={'/sign-up'} style={{textDecoration: "none"}}>
