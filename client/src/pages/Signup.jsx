@@ -1,6 +1,7 @@
 import { Box, Button, InputBase, Typography, CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import OAuth from '../components/OAuth'
 
 
 const Signup = () => {
@@ -73,6 +74,7 @@ const Signup = () => {
                   loading ? <CircularProgress/> : <Typography>sign-up</Typography>
                 }
             </Button>
+            <OAuth/>
             {
                 error ? <Typography bgcolor={'lightcoral'} borderRadius={'2px'} textAlign={'center'} p={'8px 0'}>
                     Something is wrong
