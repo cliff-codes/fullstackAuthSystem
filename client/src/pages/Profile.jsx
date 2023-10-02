@@ -1,15 +1,65 @@
 import { Box, Button, ButtonBase, InputBase, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
+import {app} from '../firebase'
 
 const Profile = () => {
   const {currentUser} = useSelector(state => state.user)
+  const fileRef = useRef(null)
+  const [image, setImage ]= useState(undefined)
+  const [uploadPercentage, setUploadPercentage] = useState(0)
+  const [uploadError, setUploadError] = useState(false)
+  const [formData, setFormData] = useState({})
+  console.log(formData)
+
+
+  useEffect(() => {
+    if(image){
+      handleProfilePicUpload(image)
+    }
+  },[image])
+
+
+  const handleProfilePicUpload = (image) => {
+    console.log(image)
+    const storage = getStorage(app)
+    const fileName = new Date().getTime() + image.name
+    const storageRef = ref(storage, fileName)
+    const uploadTask = uploadBytesResumable(storageRef,image)
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        setUploadPercentage(Math.round(progress)) 
+      }
+    )
+    error => {
+      setUploadError(true)
+    }
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+        setFormData({...formData, profilePicture: downloadUrl})
+      })
+    }
+  }
+
+
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={'center'} mt={'32px'}>
       <Typography variant='h5'>Profile</Typography>
       <form style={{display: "flex", flexDirection: 'column', alignItems: "center", gap: "16px", marginTop: "32px"}}>
+        <input type='file' ref={fileRef} hidden accept='image/*'
+          onChange={(e) => setImage(e.target.files[0])}
+        />
         <Box>
-          <img width={'80px'} height={'80px'} style={{borderRadius: "50%"}} src={`${currentUser.profilePicture}`} />
+          <img onClick={() => fileRef.current.click()} width={'80px'} height={'80px'} style={{borderRadius: "50%"}} src={`${currentUser.profilePicture}`} />
+          <div>
+            {uploadError ? <span>
+              <Typography color={'lightcoral'}>Error uploading image</Typography>
+            </span>: uploadPercentage > 0 && uploadPercentage < 100 ? <Typography textAlign={'center'}> {`image uploading ${uploadPercentage}%`}</Typography>:
+            <Typography color={'lightgreen'}>image uploaded successfully</Typography>
+          }
+          </div>
         </Box>
         <Box display={'flex'} flexDirection={'column'}>
           <InputBase defaultValue={currentUser.username} id='username'  sx={{borderRadius: "4px",minWidth: "300px",bgcolor: "lightgrey", mb: "8px", p:"8px"}} placeholder='username'/>
