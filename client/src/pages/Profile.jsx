@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import {app} from '../firebase'
 import { useDispatch } from 'react-redux'
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOut, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
 
 
 const Profile = () => {
@@ -98,6 +98,16 @@ const Profile = () => {
         dispatch(deleteUserFailure(error))
       }
   }
+
+  const handleSignout = async() => {
+   try {
+      await fetch('/api/auth/signout')
+      dispatch(signOut())
+   } catch (error) {
+      console.log(error)
+   } 
+  }
+
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={'center'} mt={'32px'}>
       <Typography variant='h5'>Profile</Typography>
@@ -129,7 +139,7 @@ const Profile = () => {
         }}}>update</Button>
         <Box width={'100%'} display={'flex'} justifyContent={'space-between'}>
           <ButtonBase onClick={handleDelete} sx={{color:'lightcoral', fontWeight: '600'}}>Delete Account</ButtonBase>
-          <ButtonBase sx={{color:'lightcoral', fontWeight: '600'}}>Sign out</ButtonBase>
+          <ButtonBase onClick={handleSignout} sx={{color:'lightcoral', fontWeight: '600'}}>Sign out</ButtonBase>
         </Box>
       </form>
     </Box>
