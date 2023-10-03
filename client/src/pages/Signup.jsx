@@ -1,13 +1,19 @@
 import { Box, Button, InputBase, Typography, CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../components/OAuth'
+import { singInSuccess } from '../redux/user/userSlice'
+import { useDispatch } from 'react-redux'
+
 
 
 const Signup = () => {
     const [formData, setFormData] = useState({})
     const [error, setError] = useState(false)
     const [loading,setLoading] = useState(false)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const handleChange = (e) => {
         setFormData({
             ...formData, [e.target.id]: e.target.value
@@ -28,6 +34,8 @@ const Signup = () => {
             body: JSON.stringify(formData)})
             const data = await res.json() 
             setLoading(false)
+            dispatch(singInSuccess(data))
+            navigate('/')
             console.log(data)
             if(data.statusCode == 500){
                 setError(true)
@@ -71,7 +79,7 @@ const Signup = () => {
                 }
             }}>
                 {
-                  loading ? <CircularProgress/> : <Typography>sign-up</Typography>
+                  loading ? <CircularProgress size={'16px'}/> : <Typography>sign-up</Typography>
                 }
             </Button>
             <OAuth/>

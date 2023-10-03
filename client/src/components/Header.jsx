@@ -11,7 +11,7 @@ const Header = () => {
         <Typography>Auth App</Typography>
         <Box display={'flex'} gap={'8px'} alignItems={'center'}>
             <Typography>
-              <Link to={'/home'} style={{textDecoration: "none", color:"inherit"}}>
+              <Link to={'/'} style={{textDecoration: "none", color:"inherit"}}>
                 Home
               </Link>
             </Typography>
