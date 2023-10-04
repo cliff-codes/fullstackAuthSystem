@@ -66,6 +66,7 @@ const Profile = () => {
     try {
       const res = await fetch(`https://auth-backend-djmg.onrender.com/api/user/update/${currentUser._id}`, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type' : 'application/json'
         },
@@ -87,7 +88,8 @@ const Profile = () => {
         console.log('working')
         dispatch(deleteUserStart())
         const res = await fetch(`https://auth-backend-djmg.onrender.com/api/user/delete/${currentUser._id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
+          mode: 'no-cors',
         })
         const data = await res.json()
         if(data.success === false){

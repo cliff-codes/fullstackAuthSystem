@@ -25,6 +25,7 @@ const Signin = () => {
             dispatch(signInStart())
             const res = await fetch('https://auth-backend-djmg.onrender.com/api/auth/Signin', {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
                 'Content-Type' : 'application/json'
             },
