@@ -53,5 +53,4 @@ const OAuth = () => {
     >Continue with Google</Button>
   )
 }
-
 export default OAuth

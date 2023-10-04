@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // '/api': {
-      //   target: 'https://auth-backend-djmg.onrender.com',
-      //   secure: false
-      // }
+      '/api': {
+        target: 'https://auth-backend-djmg.onrender.com',
+        secure: false
+      }
     }
   }
 })

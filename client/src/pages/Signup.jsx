@@ -26,7 +26,7 @@ const Signup = () => {
         try {
             setLoading(true)
             setError(false)
-            const res = await fetch('https://auth-backend-djmg.onrender.com/api/auth/signup', {
+            const res = await fetch('/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'

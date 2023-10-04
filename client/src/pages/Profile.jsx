@@ -64,7 +64,7 @@ const Profile = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`https://auth-backend-djmg.onrender.com/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json'
@@ -101,7 +101,7 @@ const Profile = () => {
 
   const handleSignout = async() => {
    try {
-      await fetch('https://auth-backend-djmg.onrender.com/api/auth/signout')
+      await fetch('/api/auth/signout')
       dispatch(signOut())
    } catch (error) {
       console.log(error)
