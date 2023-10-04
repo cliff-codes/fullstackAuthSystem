@@ -34,7 +34,7 @@ const OAuth = () => {
             dispatch(singInSuccess(data))
             navigate('/')
         } catch (error) {
-            console.log("couldn't login with google")
+            console.log(error)
         }
     }
 
