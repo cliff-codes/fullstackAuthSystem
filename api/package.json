@@ -3,7 +3,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node api/server.js",
+    "start": "node server.js",
     "build": "npm install && npm run build"
   },
   "type": "module",
