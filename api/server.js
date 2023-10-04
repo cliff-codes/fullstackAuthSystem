@@ -4,9 +4,23 @@ import dotenv from 'dotenv'
 import userRoutes from './routes/userRoute.js'
 import authRouter from './routes/auth.js'
 import cookieParser from 'cookie-parser'
-import path from 'path'
+import cors from 'cors'
+
 
 dotenv.config()
+
+//cors setup
+const corsOptions = {
+    origin: ['*'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+}
+  
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions)) // Allow preflight requests
+
+  
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log('Connected to mongoDB')
