@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 
+const app = express()
 dotenv.config()
 
 //cors setup
@@ -28,7 +29,6 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log(err)  
 })
 
-const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
