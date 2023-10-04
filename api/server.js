@@ -16,10 +16,10 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 const __dirname = path.resolve()
 
 const app = express()
-app.use(express.static(path.join(__dirname, '/client/dist')))
-app.use('*', (req,res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
-})
+// app.use(express.static(path.join(__dirname, '/client/dist')))
+// app.use('*', (req,res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+// })
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/user", userRoutes)
