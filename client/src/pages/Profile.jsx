@@ -14,14 +14,12 @@ const Profile = () => {
   const [uploadPercentage, setUploadPercentage] = useState(0)
   const [uploadError, setUploadError] = useState(false)
   const [formData, setFormData] = useState({})
-  console.log(formData)
   const dispatch = useDispatch()
   
 
   useEffect(() => {
     if(image){
       handleProfilePicUpload(image)
-      console.log(formData)
     }
   },[image])
 
@@ -46,27 +44,24 @@ const Profile = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          setFormData({ ...formData, profilePicture: downloadUrl });
-          console.log(formData);
+          setFormData({ ...formData, profilePicture: downloadUrl })
         });
       }
     );
   };
   
 
-  console.log(formData)
 
   const handleformData = (e) => {
     setFormData({...formData, [e.target.id]: e.target.value})
-    console.log(formData)
   }
 
   const handleSubmit = async(e) => {
     e.preventDefault()
     try {
+      dispatch(updateUserStart())
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'POST',
-        mode: 'no-cors',
         headers: {
           'Content-Type' : 'application/json'
         },
@@ -85,11 +80,9 @@ const Profile = () => {
 
   const handleDelete = async() => {
       try {
-        console.log('working')
         dispatch(deleteUserStart())
         const res = await fetch(`/api/user/delete/${currentUser._id}`, {
           method: 'DELETE',
-          mode: 'no-cors',
         })
         const data = await res.json()
         if(data.success === false){

@@ -10,6 +10,7 @@ export const verifyToken = (req,res, next) => {
         console.log('verifying')
         if(err) return next(403, "Token is not valid")
         req.user = user;
+        console.log(req.user)
         next()
     })
 }

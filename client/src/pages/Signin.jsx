@@ -17,7 +17,6 @@ const Signin = () => {
             ...formData, [e.target.id]: e.target.value
         })
     }
-    console.log(formData) 
  
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -25,13 +24,12 @@ const Signin = () => {
             dispatch(signInStart())
             const res = await fetch('/api/auth/Signin', {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify(formData)})
             const data = await res.json() 
-            console.log(data)
+           
             if(data.success === false){
                 dispatch(signInFailure(data.message))
                 return
