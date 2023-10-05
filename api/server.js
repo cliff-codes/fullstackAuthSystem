@@ -11,15 +11,22 @@ const app = express()
 dotenv.config()
 
 //cors setup
-const corsOptions = {
-    origin: 'https://fullstack-auth-system-1sq2c080t-cliff-codes.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204,
-}
+// const corsOptions = {
+//     origin: 'https://fullstack-auth-system-1sq2c080t-cliff-codes.vercel.app',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,
+//     optionsSuccessStatus: 204,
+// }
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
   
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions)) // Allow preflight requests
+// app.use(cors(corsOptions))
+// app.options('*', cors(corsOptions)) // Allow preflight requests
 
   
 
