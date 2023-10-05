@@ -26,7 +26,7 @@ const Signup = () => {
         try {
             setLoading(true)
             setError(false)
-            const res = await fetch('/api/auth/signup', {
+            const res = await fetch('http://localhost:3000/api/auth/signup', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
@@ -38,7 +38,7 @@ const Signup = () => {
             dispatch(singInSuccess(data))
             navigate('/')
             console.log(data)
-            if(data.statusCode == 500){
+            if(data.statusCode === 500){
                 setError(true)
             }else{
             }
