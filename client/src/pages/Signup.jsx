@@ -28,7 +28,6 @@ const Signup = () => {
             setError(false)
             const res = await fetch('https://auth-backend-djmg.onrender.com/api/auth/signup', {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type' : 'application/json'
             },
