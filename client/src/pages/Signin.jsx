@@ -8,6 +8,7 @@ import OAuth from '../components/OAuth'
 
 const Signin = () => {
     const [formData, setFormData] = useState({})
+    const [formDataIsValid,setFormDataIsValid] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {loading, error} = useSelector(state => state.user)
@@ -41,6 +42,24 @@ const Signin = () => {
         }
     }
 
+     //check if formData is not empty or not
+     function isObjectNotEmpty(obj) {
+        if (!obj || typeof obj !== 'object') {
+          return false; // Not an object or object is null/undefined
+        }
+      
+        return Object.values(obj).every(value => {
+          // Check if the value is not null, undefined, an empty string, or an empty array
+          return value !== null && value !== undefined &&
+                 !(typeof value === 'string' && value.trim() === '') &&
+                 !(Array.isArray(value) && value.length === 0);
+        });
+    }
+
+    useEffect(() => {
+        setFormDataIsValid(isObjectNotEmpty(formData))
+    },[formData])
+
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems={'center'} mt={'32px'}>
         <Typography pb={'8px'} variant='h4'>Sign-In</Typography>
@@ -51,7 +70,7 @@ const Signin = () => {
             gap: "8px"
         }} onSubmit={handleSubmit}>
 
-            <InputBase sx={{bgcolor: 'lightgrey', borderRadius: "5px", p: "8px"}}placeholder='Email' id='email'
+            <InputBase type='email' sx={{bgcolor: 'lightgrey', borderRadius: "5px", p: "8px"}}placeholder='Email' id='email'
             onChange={handleChange}
             />
 
@@ -60,7 +79,7 @@ const Signin = () => {
             />   
 
             <Button 
-                disabled = {loading}
+                disabled = {loading || !formDataIsValid}
                 type='submit' sx={{
                 bgcolor: 'darkslateblue',
                 color: "white",
