@@ -55,12 +55,12 @@ const Profile = () => {
   const handleformData = (e) => {
     setFormData({...formData, [e.target.id]: e.target.value})
   }
-
+  const url = "https://auth-backend-djmg.onrender.com"
   const handleSubmit = async(e) => {
     e.preventDefault()
     try {
       dispatch(updateUserStart())
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${url}/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json'
@@ -81,7 +81,7 @@ const Profile = () => {
   const handleDelete = async() => {
       try {
         dispatch(deleteUserStart())
-        const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        const res = await fetch(`${url}/api/user/delete/${currentUser._id}`, {
           method: 'DELETE',
         })
         const data = await res.json()
@@ -96,7 +96,7 @@ const Profile = () => {
 
   const handleSignout = async() => {
    try {
-      await fetch('/api/auth/signout')
+      await fetch(`${url}/api/auth/signout`)
       dispatch(signOut())
    } catch (error) {
       console.log(error)
