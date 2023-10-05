@@ -26,7 +26,7 @@ const Signup = () => {
         try {
             setLoading(true)
             setError(false)
-            const res = await fetch('http://localhost:3000/api/auth/signup', {
+            const res = await fetch('https://auth-backend-djmg.onrender.com/api/auth/signup', {
             method: 'POST',
             mode: 'no-cors',
             headers: {
