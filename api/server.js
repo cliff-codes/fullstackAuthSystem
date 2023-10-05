@@ -12,7 +12,7 @@ dotenv.config()
 
 //cors setup
 const corsOptions = {
-    origin: ['*'],
+    origin: 'https://fullstack-auth-system-1sq2c080t-cliff-codes.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
